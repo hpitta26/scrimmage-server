@@ -1,21 +1,62 @@
 # scrimmage
 
-MIT Pokerbots Scrimmage Server, released under the MIT License
+FIU Pokerbots Scrimmage Server, released under the MIT License
 
 To run locally, do:
 
 - `brew install rabbitmq scons boost postgres`
-- `initdb --username=postgres ~/pbots; pg_ctl -D /Users/gabrielramirez/pbots -l logfile start; createdb -U postgres pbots`
+- `initdb --username=postgres ~/pbots; pg_ctl -D ~/pbots -l logfile start; createdb -U postgres pbots`
 - `pip install -r requirements.txt`
 - Run `from scrimmage import db; db.create_all()` from a python3 shell
 
+If the last command doesn't work run this in the Python Shell instead:
+```bash
+from scrimmage import app, db 
+with app.app_context(): 
+	db.create_all()
+```
+
 then do
 
-To run the server and worker, run in three separate tabs:
+To run the server and worker, run in four separate tabs:
 
-- `rabbitmq-server`
-- `python manage.py runserver`
-- `celery -A scrimmage.celery_app worker --loglevel=info --concurrency=1`
+```bash
+rabbitmq-server
+
+# http://localhost:15672/ --> Admin Panel
+```
+
+```bash
+export FLASK_APP=manage.py
+flask run --host=0.0.0.0 --port=8000 --debug
+```
+
+```bash
+celery -A scrimmage.celery_app worker --loglevel=info --concurrency=1
+```
+
+```bash
+celery -A scrimmage.celery_app flower
+
+# http://localhost:5555/ --> Admin Panel
+```
+
+---
+Additional Debugging commands:
+```bash
+# Drop DB in case of issues
+dropdb -U postgres pbots
+
+# Status of the DB
+pg_ctl -D ~/pbots status
+
+rabbitmqctl stop # stop process
+
+rabbitmqctl status
+
+rabbitmq-plugins enable rabbitmq_management # enable rabbitmq Admin Panel in case you get 403 errors
+```
+---
 
 Production
 ----------
