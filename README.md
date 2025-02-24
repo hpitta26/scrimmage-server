@@ -3,8 +3,9 @@
 FIU Pokerbots Scrimmage Server, released under the MIT License
 
 To run locally, do:
-
 - `brew install rabbitmq scons boost postgres`
+- `python -m venv venv`
+- `source venv/bin/activate`
 - `initdb --username=postgres ~/pbots; pg_ctl -D ~/pbots -l logfile start; createdb -U postgres pbots`
 - `pip install -r requirements.txt`
 - Run `from scrimmage import db; db.create_all()` from a python3 shell
