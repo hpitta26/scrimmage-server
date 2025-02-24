@@ -31,6 +31,8 @@ rabbitmq-server
 
 ```bash
 flask run
+
+# http://localhost:8000/ --> frontend and backend
 ```
 
 ```bash
