@@ -2,6 +2,8 @@
 
 FIU Pokerbots Scrimmage Server, released under the MIT License
 
+- Create .env and copy content from .env.example into it
+
 To run locally, do:
 - `brew install rabbitmq scons boost postgres`
 - `python -m venv venv`
@@ -28,8 +30,7 @@ rabbitmq-server
 ```
 
 ```bash
-export FLASK_APP=manage.py
-flask run --host=0.0.0.0 --port=8000 --debug
+flask run
 ```
 
 ```bash
