@@ -42,12 +42,18 @@ def health_check():
 # Custom environment dump endpoint
 @app.route('/environment')
 def environment_dump():
+    def safe_serialize(obj):
+        try:
+            return str(obj)
+        except Exception:
+            return None
+
     # Gather environment information
     env_info = {
         "python_version": sys.version,
         "platform": platform.platform(),
-        "environment_variables": dict(os.environ),
-        "app_config": {k: v for k, v in app.config.items() if not k.startswith('_')}
+        "environment_variables": {k: safe_serialize(v) for k, v in os.environ.items()},
+        "app_config": {k: safe_serialize(v) for k, v in app.config.items() if not k.startswith('_')}
     }
     return jsonify(env_info)
 
