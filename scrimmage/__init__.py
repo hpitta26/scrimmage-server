@@ -1,6 +1,6 @@
 import os
 from celery import Celery
-from flask import Flask, jsonify
+from flask import Flask, jsonify, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_sslify import SSLify
 from flask_migrate import Migrate
@@ -21,6 +21,13 @@ app.config.from_object(config_object_str)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 sslify = SSLify(app)
+
+# Set up Kerberos login for admin access --> need to change implementation for deployment
+@app.route('/setadmin/<kerberos>')
+def setadmin(kerberos):
+    session['kerberos'] = kerberos
+    session['real_kerberos'] = kerberos
+    return redirect(url_for('admin_index'))
 
 # Custom health check endpoint
 @app.route('/check')
