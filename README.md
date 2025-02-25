@@ -62,6 +62,15 @@ rabbitmq-plugins enable rabbitmq_management # enable rabbitmq Admin Panel in cas
 ```
 ---
 
+Submodules
+----------
+Initialize the engine submodule in your local repo
+```
+git submodule sync
+git submodule update --init --recursive
+```
+---
+
 Production
 ----------
 
