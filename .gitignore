@@ -103,3 +103,6 @@ start_worker.sh
 start_server.sh
 
 .idea/
+
+# Local Storage --> where to store Bots in dev mode without using AWS credentials
+local_storage/
