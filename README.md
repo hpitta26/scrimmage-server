@@ -83,3 +83,9 @@ Development
 -----------
 
 When you add new database features, do `python manage.py db migrate` and `python manage.py db upgrade`.
+
+
+Issues
+-----------
+- Upload Bot: not working because of missing AWS credentials
+---

@@ -54,6 +54,7 @@ def player_log(game_id):
   return send_file(get_s3_object(key), mimetype="text/plain")
 
 
+# NoCredntialsError --> issue with AWS credentials
 @app.route('/team/create_bot', methods=['POST'])
 @team_required
 def create_bot():
