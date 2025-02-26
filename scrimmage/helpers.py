@@ -1,20 +1,21 @@
-import os
 import requests
 import boto3
 from botocore.client import Config
 
 from scrimmage import app
 
-LOCAL_STORAGE_PATH = 'local_storage'
-
-# Upload files to S3 --> when app.debug=True use local file storage
+# LOCAL_STORAGE_PATH = os.path.join(os.path.dirname(__file__), '..', 'local_storage')
 
 def _get_s3_context():
-  # if app.debug:
-  #   return boto3.client('s3', config=Config(signature_version='s3v4'))
-  if app.debug:
-        return None  # Indicate local storage
-  else:
+  if app.debug: # Development Mode --> MinIO S3
+    return boto3.client(
+      's3',
+      endpoint_url=app.config['S3_ENDPOINT_URL'],
+      aws_access_key_id=app.config['AWS_ACCESS_KEY_ID'],
+      aws_secret_access_key=app.config['AWS_SECRET_ACCESS_KEY'],
+      config=Config(signature_version='s3v4')
+    )
+  else: # Production Mode --> AWS S3
     return boto3.client(
       's3',
       region_name=app.config['S3_REGION'],
@@ -26,27 +27,12 @@ def _get_s3_context():
 
 def get_s3_object(key):
   client = _get_s3_context()
-  if client is None:
-    # Local storage
-    local_path = os.path.join(LOCAL_STORAGE_PATH, key)
-    with open(local_path, 'rb') as f:
-      return f.read()
-  else:
-    # S3 storage
-    return client.get_object(Bucket=app.config['S3_BUCKET'], Key=key)['Body']
+  return client.get_object(Bucket=app.config['S3_BUCKET'], Key=key)['Body']
 
 
 def put_s3_object(key, body):
   client = _get_s3_context()
-  if client is None:
-    # Local storage
-    local_path = os.path.join(LOCAL_STORAGE_PATH, key)
-    os.makedirs(os.path.dirname(local_path), exist_ok=True)
-    with open(local_path, 'wb') as f:
-      f.write(body.read())
-  else:
-    # S3 storage
-    client.put_object(Body=body, Bucket=app.config['S3_BUCKET'], Key=key)
+  client.put_object(Body=body, Bucket=app.config['S3_BUCKET'], Key=key)
 
 
 def get_student_info(kerberos):

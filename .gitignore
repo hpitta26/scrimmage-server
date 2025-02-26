@@ -104,5 +104,6 @@ start_server.sh
 
 .idea/
 
-# Local Storage --> where to store Bots in dev mode without using AWS credentials
+# MinIO development mode S3 bucket related files
 local_storage/
+minio

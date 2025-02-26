@@ -21,7 +21,7 @@ with app.app_context():
 
 then do
 
-To run the server and worker, run in four separate tabs:
+To run the server and worker, run in five separate tabs:
 
 ```bash
 rabbitmq-server
@@ -45,11 +45,44 @@ celery -A scrimmage.celery_app flower
 # http://localhost:5555/ --> Admin Panel
 ```
 
+```bash
+# setting up MinIO S3-Bucket for Dev Mode
+
+# Download MinIO
+curl -O https://dl.min.io/server/minio/release/darwin-amd64/minio
+chmod +x minio
+
+# Set up local_storage directory in project root
+mkdir local_storage
+
+# Run MinIO in that directory
+./minio server local_storage
+
+# Access panel at --> http://localhost:9000
+# Username & Password both are --> minioadmin
+```
+
+Submodules
+----------
+Initialize the engine submodule in your local repo
+```
+git submodule sync
+git submodule update --init --recursive
+```
 ---
+
 Additional Debugging commands:
+----------
 ```bash
 # Drop DB in case of issues
-dropdb -U postgres pbots
+psql -h localhost -U your_username
+DROP DATABASE pbots;
+CREATE DATABASE pbots;
+\q
+# then in python shell
+from scrimmage import app, db 
+with app.app_context(): 
+	db.create_all()
 
 # Status of the DB
 pg_ctl -D ~/pbots status
@@ -59,15 +92,6 @@ rabbitmqctl stop # stop process
 rabbitmqctl status
 
 rabbitmq-plugins enable rabbitmq_management # enable rabbitmq Admin Panel in case you get 403 errors
-```
----
-
-Submodules
-----------
-Initialize the engine submodule in your local repo
-```
-git submodule sync
-git submodule update --init --recursive
 ```
 ---
 
@@ -88,4 +112,5 @@ When you add new database features, do `python manage.py db migrate` and `python
 Issues
 -----------
 - Upload Bot: not working because of missing AWS credentials
+- Solved --> use MinIO in development mode
 ---

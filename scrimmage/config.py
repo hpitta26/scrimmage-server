@@ -30,3 +30,8 @@ class DevConfig(Config):
   PREFERRED_URL_SCHEME = 'http'
   S3_BUCKET = 'pokerbots-dev'
   CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
+  
+  AWS_ACCESS_KEY_ID = 'minioadmin'
+  AWS_SECRET_ACCESS_KEY = 'minioadmin'
+  S3_REGION = 'us-east-1'
+  S3_ENDPOINT_URL = 'http://localhost:9000'
