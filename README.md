@@ -60,6 +60,10 @@ mkdir local_storage
 
 # Access panel at --> http://localhost:9000
 # Username & Password both are --> minioadmin
+
+# IMPORTANT:
+# Before running a game you must log into http://localhost:9000
+# & create a bucket with the name --> pokerbots-dev
 ```
 
 Submodules
