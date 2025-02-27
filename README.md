@@ -1,7 +1,10 @@
 # scrimmage
 
 This Repo is the base for the FIU-PokberBots scrimmage-server repo  
-& was Adpated from MIT-Pokerbots scrimmage-server
+& was Adpated from the MIT-Pokerbots scrimmage-server repo
+  
+Check out the up to date version at:  
+https://github.com/FIU-PokerBots/scrimmage-server 
 
 ---
 
