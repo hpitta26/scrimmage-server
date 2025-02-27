@@ -1,5 +1,10 @@
 # scrimmage
 
+This Repo is the base for the FIU-PokberBots scrimmage-server repo  
+& was Adpated from MIT-Pokerbots scrimmage-server
+
+---
+
 FIU Pokerbots Scrimmage Server, released under the MIT License
 
 - Create .env and copy content from .env.example into it
@@ -65,6 +70,7 @@ mkdir local_storage
 # Before running a game you must log into http://localhost:9000
 # & create a bucket with the name --> pokerbots-dev
 ```
+---
 
 Submodules
 ----------
@@ -106,6 +112,7 @@ Production
 
 Setting up convox is a little bit of a pain - you have to create the necessary resources and set the required environment variables. Once you have a successful deploy, however, you need to run `convox run web python manage.py shell` and then run `from scrimmage import db; db.create_all()` on the first time.
 
+---
 
 Development
 -----------
